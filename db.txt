@@ -1,8 +1,5 @@
-Krzysztof 20
-Janusz 40
-Krzysztof 20
-Janusz 40
-Jan 23
-Krzuchu 1000
-Gerwazy 88
-Major 58
+Jan Romek 33
+Romek Atomek 25
+John Damian 66
+Sebastian Seba 29
+Janusz Kula 55
