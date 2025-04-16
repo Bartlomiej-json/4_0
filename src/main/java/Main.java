@@ -16,20 +16,45 @@ class Main {
       Service s = new Service();
       Scanner scanner = new Scanner(System.in);
 
-      System.out.print("Podaj imię studenta: ");
-      String imie = scanner.nextLine();
+      while (true) {
+        System.out.println("Wybierz opcję:  " );
+        System.out.println("1. Dodaj studenta");
+        System.out.println("2. Wyświetl wszystkich studentów");
+        System.out.println("3. Zakończ");
 
-      System.out.print("Podaj wiek studenta: ");
-      int wiek = Integer.parseInt(scanner.nextLine());
+        int wybor = Integer.parseInt(scanner.nextLine());
 
-      s.addStudent(new Student(imie, wiek));
+        switch (wybor) {
+          case 1:
+            System.out.print("Podaj imię studenta: ");
+            String imie = scanner.nextLine();
 
-      System.out.println("Student dodany!");
-      scanner.close();
+            System.out.print("Podaj wiek studenta: ");
+            int wiek = Integer.parseInt(scanner.nextLine());
 
-      var students = s.getStudents();
-      for (Student current : students) {
-        System.out.println(current.ToString());
+            s.addStudent(new Student(imie, wiek));
+            System.out.println("Student dodany!");
+            break;
+
+          case 2:
+            var students = s.getStudents();
+            if (students.isEmpty()) {
+              System.out.println("Brak studentów w bazie.");
+            } else {
+              for (Student current : students) {
+                System.out.println(current.ToString());
+              }
+            }
+            break;
+
+          case 3:
+            System.out.println("Zakończono program.");
+            scanner.close();
+            return; // Zakończenie programu
+
+          default:
+            System.out.println("Nieprawidłowy wybór. Spróbuj ponownie.");
+        }
       }
     } catch (IOException e) {
       System.out.println("Błąd operacji na pliku: " + e.getMessage());

@@ -3,3 +3,6 @@ Janusz 40
 Krzysztof 20
 Janusz 40
 Jan 23
+Krzuchu 1000
+Gerwazy 88
+Major 58
