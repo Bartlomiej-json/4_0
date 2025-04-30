@@ -11,7 +11,8 @@ class Main {
         System.out.println("Wybierz opcję:");
         System.out.println("1. Dodaj studenta");
         System.out.println("2. Wyświetl wszystkich studentów");
-        System.out.println("3. Zakończ");
+        System.out.println("3. Wyszukaj studenta po imieniu");
+        System.out.println("4. Zakończ");
 
         int wybor = Integer.parseInt(scanner.nextLine());
 
@@ -50,6 +51,19 @@ class Main {
             break;
 
           case 3:
+            // Wyszukiwanie studenta po imieniu
+            System.out.print("Podaj imię studenta, którego chcesz znaleźć: ");
+            String szukaneImie = scanner.nextLine();
+
+            Student student = serwis.findStudentByName(szukaneImie);
+            if (student != null) {
+              System.out.println("Znaleziono studenta: " + student.toString());
+            } else {
+              System.out.println("Nie znaleziono studenta o imieniu " + szukaneImie);
+            }
+            break;
+
+          case 4:
             System.out.println("Zakończono program.");
             scanner.close();
             return;

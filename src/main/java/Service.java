@@ -30,8 +30,23 @@ public class Service {
     return ret;
   }
 
-  // Nieużywana, ale zostawiona metoda szukania po imieniu
+  // Metoda do wyszukiwania studenta po imieniu
   public Student findStudentByName(String name) {
+    try {
+      // Wczytanie studentów
+      Collection<Student> students = getStudents();
+
+      // Przeszukiwanie kolekcji studentów i zwrócenie pierwszego pasującego
+      for (Student student : students) {
+        if (student.getImie().equalsIgnoreCase(name)) {
+          return student;  // Zwrócenie pierwszego studenta o podanym imieniu
+        }
+      }
+    } catch (IOException e) {
+      System.out.println("Błąd przy wczytywaniu studentów: " + e.getMessage());
+    }
+
+    // Jeśli student o podanym imieniu nie został znaleziony, zwróć null
     return null;
   }
 }
