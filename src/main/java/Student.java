@@ -5,7 +5,6 @@ public class Student {
   private int wiek;
   private String dataUrodzenia;
 
-  // Konstruktor
   public Student(String imie, String nazwisko, int wiek, String dataUrodzenia) {
     this.imie = imie;
     this.nazwisko = nazwisko;
@@ -13,19 +12,16 @@ public class Student {
     this.dataUrodzenia = dataUrodzenia;
   }
 
-  // Gettery
   public String getImie() { return imie; }
   public String getNazwisko() { return nazwisko; }
   public int getWiek() { return wiek; }
   public String getDataUrodzenia() { return dataUrodzenia; }
 
-  // Metoda toString do zapisu do pliku i wyświetlania
   @Override
   public String toString() {
     return imie + " " + nazwisko + " " + wiek + " " + dataUrodzenia;
   }
 
-  // Metoda do wczytywania studenta z linii tekstu
   public static Student parsuj(String linia) {
     String[] dane = linia.split(" ");
     if (dane.length != 4) {

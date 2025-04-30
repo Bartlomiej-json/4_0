@@ -4,15 +4,16 @@ import java.util.Scanner;
 class Main {
   public static void main(String[] args) {
     try {
-      Service serwis = new Service();  // Poprawiona nazwa instancji
+      Service serwis = new Service();
       Scanner scanner = new Scanner(System.in);
 
       while (true) {
-        System.out.println("Wybierz opcję:");
+        System.out.println("\nWybierz opcję:");
         System.out.println("1. Dodaj studenta");
         System.out.println("2. Wyświetl wszystkich studentów");
         System.out.println("3. Wyszukaj studenta po imieniu");
-        System.out.println("4. Zakończ");
+        System.out.println("4. Usuń studenta po imieniu i nazwisku");
+        System.out.println("5. Zakończ");
 
         int wybor = Integer.parseInt(scanner.nextLine());
 
@@ -44,36 +45,42 @@ class Main {
             if (studenci.isEmpty()) {
               System.out.println("Brak studentów w bazie.");
             } else {
-              for (Student student : studenci) {
-                System.out.println(student.toString());
+              for (Student s : studenci) {
+                System.out.println(s.toString());
               }
             }
             break;
 
           case 3:
-            // Wyszukiwanie studenta po imieniu
-            System.out.print("Podaj imię studenta, którego chcesz znaleźć: ");
+            System.out.print("Podaj imię studenta do wyszukania: ");
             String szukaneImie = scanner.nextLine();
-
-            Student student = serwis.findStudentByName(szukaneImie);
-            if (student != null) {
-              System.out.println("Znaleziono studenta: " + student.toString());
+            Student znaleziony = serwis.findStudentByName(szukaneImie);
+            if (znaleziony != null) {
+              System.out.println("Znaleziono: " + znaleziony);
             } else {
-              System.out.println("Nie znaleziono studenta o imieniu " + szukaneImie);
+              System.out.println("Nie znaleziono studenta o imieniu: " + szukaneImie);
             }
             break;
 
           case 4:
+            System.out.print("Podaj imię studenta do usunięcia: ");
+            String imieDoUsuniecia = scanner.nextLine();
+            System.out.print("Podaj nazwisko studenta do usunięcia: ");
+            String nazwiskoDoUsuniecia = scanner.nextLine();
+            serwis.removeStudent(imieDoUsuniecia, nazwiskoDoUsuniecia);
+            break;
+
+          case 5:
             System.out.println("Zakończono program.");
             scanner.close();
             return;
 
           default:
-            System.out.println("Nieprawidłowy wybór. Spróbuj ponownie.");
+            System.out.println("Nieprawidłowy wybór.");
         }
       }
     } catch (IOException e) {
-      System.out.println("Błąd operacji na pliku: " + e.getMessage());
+      System.out.println("Błąd pliku: " + e.getMessage());
     }
   }
 

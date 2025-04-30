@@ -1,52 +1,63 @@
 import java.util.Collection;
 import java.util.ArrayList;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class Service {
 
-  // Dodaje studenta do pliku
   public void addStudent(Student student) throws IOException {
-    var f = new FileWriter("db.txt", true);
-    var b = new BufferedWriter(f);
-    b.append(student.toString());
+    var b = new BufferedWriter(new FileWriter("db.txt", true));
+    b.write(student.toString());
     b.newLine();
     b.close();
   }
 
-  // Wczytuje wszystkich studentów z pliku
   public Collection<Student> getStudents() throws IOException {
-    var ret = new ArrayList<Student>();
-    var f = new FileReader("db.txt");
-    var reader = new BufferedReader(f);
+    var lista = new ArrayList<Student>();
+    var reader = new BufferedReader(new FileReader("db.txt"));
     String line;
     while ((line = reader.readLine()) != null) {
-      ret.add(Student.parsuj(line));
+      lista.add(Student.parsuj(line));
     }
     reader.close();
-    return ret;
+    return lista;
   }
 
-  // Metoda do wyszukiwania studenta po imieniu
   public Student findStudentByName(String name) {
     try {
-      // Wczytanie studentów
-      Collection<Student> students = getStudents();
-
-      // Przeszukiwanie kolekcji studentów i zwrócenie pierwszego pasującego
-      for (Student student : students) {
-        if (student.getImie().equalsIgnoreCase(name)) {
-          return student;  // Zwrócenie pierwszego studenta o podanym imieniu
+      for (Student s : getStudents()) {
+        if (s.getImie().equalsIgnoreCase(name)) {
+          return s;
         }
       }
     } catch (IOException e) {
-      System.out.println("Błąd przy wczytywaniu studentów: " + e.getMessage());
+      System.out.println("Błąd odczytu bazy danych.");
+    }
+    return null;
+  }
+
+  public void removeStudent(String imie, String nazwisko) throws IOException {
+    var wszyscy = new ArrayList<Student>(getStudents());
+    var pozostali = new ArrayList<Student>();
+
+    boolean usunieto = false;
+    for (Student s : wszyscy) {
+      if (!usunieto && s.getImie().equalsIgnoreCase(imie) && s.getNazwisko().equalsIgnoreCase(nazwisko)) {
+        usunieto = true; // usuwa tylko pierwsze dopasowanie
+        continue;
+      }
+      pozostali.add(s);
     }
 
-    // Jeśli student o podanym imieniu nie został znaleziony, zwróć null
-    return null;
+    if (usunieto) {
+      var writer = new BufferedWriter(new FileWriter("db.txt", false));
+      for (Student s : pozostali) {
+        writer.write(s.toString());
+        writer.newLine();
+      }
+      writer.close();
+      System.out.println("Student " + imie + " " + nazwisko + " został usunięty.");
+    } else {
+      System.out.println("Nie znaleziono studenta o imieniu i nazwisku: " + imie + " " + nazwisko);
+    }
   }
 }
