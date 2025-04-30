@@ -1,31 +1,36 @@
 public class Student {
 
-  private String Name;
-  private String Surname;  // Nowe pole dla nazwiska
-  private int Age;
+  private String imie;
+  private String nazwisko;
+  private int wiek;
+  private String dataUrodzenia;
 
-  // Zaktualizowany konstruktor
-  public Student(String name, String surname, int age) {
-    Name = name;
-    Surname = surname;
-    Age = age;
+  // Konstruktor
+  public Student(String imie, String nazwisko, int wiek, String dataUrodzenia) {
+    this.imie = imie;
+    this.nazwisko = nazwisko;
+    this.wiek = wiek;
+    this.dataUrodzenia = dataUrodzenia;
   }
 
-  // Gettery dla imienia, nazwiska i wieku
-  public String GetName() { return Name; }
-  public String GetSurname() { return Surname; }  // Getter dla nazwiska
-  public int GetAge() { return Age; }
+  // Gettery
+  public String getImie() { return imie; }
+  public String getNazwisko() { return nazwisko; }
+  public int getWiek() { return wiek; }
+  public String getDataUrodzenia() { return dataUrodzenia; }
 
-  // Zaktualizowana metoda ToString() z nazwiskiem
-  public String ToString() {
-    return Name + " " + Surname + " " + Integer.toString(Age);
+  // Metoda toString do zapisu do pliku i wyświetlania
+  @Override
+  public String toString() {
+    return imie + " " + nazwisko + " " + wiek + " " + dataUrodzenia;
   }
 
-  // Zaktualizowana metoda Parse() do przetwarzania imienia, nazwiska i wieku
-  public static Student Parse(String str) {
-    String[] data = str.split(" ");
-    if(data.length != 3)  // Oczekujemy imienia, nazwiska i wieku
-      return new Student("Parse Error", "Parse Error", -1);
-    return new Student(data[0], data[1], Integer.parseInt(data[2]));
+  // Metoda do wczytywania studenta z linii tekstu
+  public static Student parsuj(String linia) {
+    String[] dane = linia.split(" ");
+    if (dane.length != 4) {
+      return new Student("Błąd", "Parsowania", -1, "0000-00-00");
+    }
+    return new Student(dane[0], dane[1], Integer.parseInt(dane[2]), dane[3]);
   }
 }
